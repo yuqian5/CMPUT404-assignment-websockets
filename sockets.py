@@ -84,7 +84,8 @@ def read_ws(ws, client):
                             for s in subscribers:
                                 if not s.closed:
                                     s.send(json.dumps({
-                                        "message": "unknown request type",
+                                        "type": "world",
+                                        "data": myWorld.world()
                                     }))
                                 else:
                                     subscribers.remove(s)
@@ -92,7 +93,7 @@ def read_ws(ws, client):
                             for s in subscribers:
                                 if not s.closed:
                                     s.send(json.dumps({
-                                        "message": "malformed request"
+                                        "message": "bad request"
                                     }))
                                 else:
                                     subscribers.remove(s)
@@ -100,8 +101,7 @@ def read_ws(ws, client):
                         for s in subscribers:
                             if not s.closed:
                                 s.send(json.dumps({
-                                    "type": "world",
-                                    "data": myWorld.world()
+                                    "message": "bad request"
                                 }))
                             else:
                                 subscribers.remove(s)
